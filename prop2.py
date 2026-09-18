@@ -3,23 +3,23 @@ import numpy as np
 
 def prop(cylinder):
 
-    if cylinder == 1:  # AVIBRAS
+    if cylinder == 1:  # User Defined
 
-        L = 640
-        Rc = 210
-        hp = 0.37
+        L = 510
+        Rc = 250
+        hp = 0.125
 
-        E1 = 158000
-        E2 = 7000
+        E1 = 123550
+        E2 = 8708
         E3 = E2
 
-        v12 = 0.34
+        v12 = 0.319
 
-        G12 = 2585.5
+        G12 = 5695
         G13 = G12
-        G23 = G12
+        G23 = 3400
 
-        theta_deg = np.array([35, -35, 15, -15])
+        theta_deg = np.array([45, -45, 15, -15])
 
     elif cylinder == 2:  # Z11
 
@@ -61,7 +61,7 @@ def prop(cylinder):
             [0, 0, 19, -19, 37, -37, 45, -45, 51, -51]
         )
 
-    elif cylinder == 4:  # Lata
+    elif cylinder == 4:  # ITA**
 
         L = 140
         Rc = 235 / 2
@@ -97,7 +97,7 @@ def prop(cylinder):
 
         theta_deg = np.array([10, -10])
 
-    elif cylinder == 6:  # Tecplas
+    elif cylinder == 6:  # Tec
 
         L = 525
         Rc = 350 / 2

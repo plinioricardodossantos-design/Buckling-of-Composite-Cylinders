@@ -14,13 +14,13 @@ from plot_buckling_mode import plot_cylinder_buckling_mode
 from plot_contour import plot_cylinder_buckling_contour
 
 # Parameters
-nx = 8
-ny = 8
+nx = 15
+ny = 15
 nt = 2 * nx * ny
-NG = 50
+NG = 130
 
 # Material properties
-E1, E2, v12, v21, G12, G13, G23, teta_deg, hp, L, Rc = prop(2)
+E1, E2, v12, v21, G12, G13, G23, teta_deg, hp, L, Rc = prop(2) # check the function/file "prop.py". Use "1" for user defined
 print(E1)
 Np = len(teta_deg)
 
@@ -31,8 +31,6 @@ range_y = np.arange(1, ny + 1).reshape(1, -1)
 # Gauss quadrature
 xxg, wi = gaussian_quadrature(NG, 0, L)
 yyg, wj = gaussian_quadrature(NG, 0, 2 * np.pi)
-#xxg, wi = lgwt(NG, 0, L)
-#yyg, wj = lgwt(NG, 0, 2 * np.pi)
 
 xi, yi = np.meshgrid(xxg, yyg)
 
@@ -90,14 +88,13 @@ eigvecs = eigvecs[:, idx]
 
 Nz_cr = eigvals[0]
 P_cr = 2 * np.pi * Rc * Nz_cr / 1000
-pressure_cr = -2*Rc*Nz_cr
+#pressure_cr = -2*Rc*Nz_cr
+pressure_cr = -2*Nz_cr/Rc
 
-#pressure_cr_paper
-
-print("N_cr [N/mm]:", Nz_cr)
+#print("N_cr [N/mm]:", Nz_cr)
 print("P_cr [kN]:", P_cr)
 print("pressure_cr [MPa]:", pressure_cr)
-print("pressure_cr_paper [MPa]:", pressure_cr)
+#print("pressure_cr_paper [MPa]:", pressure_cr)
 
 # First buckling mode
 qq = np.real(eigvecs[:, 0])

@@ -1,10 +1,12 @@
+import nt
+
 import numpy as np
 
 def evaluate_KGz(x, theta, a, b, range_z, range_theta):
 
-    F = np.sin(range_z * np.pi * x / a)
+    #F = np.sin(range_z * np.pi * x / a)
     #G = np.sin(range_theta * theta)
-    H = np.sin(range_z * np.pi * x / a)
+    #H = np.sin(range_z * np.pi * x / a)
     #I = np.cos(range_theta * theta)
 
     NFGx = (range_z * np.pi *np.cos(np.pi * range_z * x / a) * np.sin(range_theta * theta)) / a
@@ -15,13 +17,20 @@ def evaluate_KGz(x, theta, a, b, range_z, range_theta):
         np.cos(range_theta * theta)
     ) / a
 
-    NFGt = np.outer(range_theta * np.cos(range_theta * theta),
-                    F).reshape(-1)
+    #NFGt = np.outer(range_theta * np.cos(range_theta * theta),
+    #                F).reshape(-1)
 
-    NHIt = np.outer(-range_theta * np.sin(range_theta * theta),
-                    H).reshape(-1)
+    #NFGy = sin((pi*range_z*x)/a)*range_teta.*cos(range_teta*theta);
+
+    NFGt = np.sin((np.pi * range_z * x) / a) * range_theta * np.cos(range_theta * theta)
+   
+
+    #NHIt = np.outer(-range_theta * np.sin(range_theta * theta),
+     #               H).reshape(-1)
+
+    NHIt = -np.sin((np.pi * range_z * x) / a) * range_theta * np.sin(range_theta * theta)
     
-    NFGx = NFGx.T.reshape(-1)
+    NFGx = NFGx.T.reshape(-1)  
     NHIx = NHIx.T.reshape(-1)
 
     NFGt = NFGt.T.reshape(-1)
@@ -48,9 +57,13 @@ def evaluate_KGz(x, theta, a, b, range_z, range_theta):
         [H00, H00, H00, H00, H00],
         [H00, H00, H00, H00, H00] ])
 
-    HG_Total = HGz.T @ HGz + 2*HGt.T @ HGt
+    HG_Total = HGz.T @ HGz + (2/b**2)*HGt.T @ HGt # axial z + circumferential theta
+    #HG_Total = HGz.T @ HGz # Axial z only
 
-    f_theta = 1.0
+    #print("Nt: ", Nt)
+    #print("Nx: ", Nx)
 
+    #f_theta = 1.0
     #return f_theta * HGz.T @ HGz
-    return f_theta * HG_Total.T @ HG_Total
+    #return f_theta * HG_Total.T @ HG_Total
+    return HG_Total
